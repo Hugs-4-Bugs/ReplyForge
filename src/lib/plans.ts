@@ -1,6 +1,6 @@
 // Plan definitions + entitlement logic. Pricing is wired to Stripe price IDs
 // via env vars; when those are absent, the plans still function in "dev mode"
-// (everything allowed, billing simulated) — see src/lib/stripe.ts.
+// (everything allowed, billing simulated) - see src/lib/stripe.ts.
 
 export type PlanId = "free" | "starter" | "pro" | "business";
 
@@ -150,7 +150,7 @@ export function isUpgrade(from: string, to: string): boolean {
   return planRank(to) > planRank(from);
 }
 
-// Usage counter — read from DB. Used by entitlement enforcement.
+// Usage counter - read from DB. Used by entitlement enforcement.
 export async function getUsage(orgId: string) {
   const [seats, projectsThisMonth, contentCount, docCount] = await Promise.all([
     db.membership.count({ where: { organizationId: orgId } }),

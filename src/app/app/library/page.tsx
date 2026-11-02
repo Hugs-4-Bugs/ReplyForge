@@ -18,7 +18,7 @@ export default async function LibraryPage() {
     tags: e.tags,
     status: e.status,
     confidence: e.confidence,
-    authorName: e.author?.name ?? e.author?.email ?? "—",
+    authorName: e.author?.name ?? e.author?.email ?? "-",
     updatedAt: e.updatedAt.toISOString(),
   }));
 

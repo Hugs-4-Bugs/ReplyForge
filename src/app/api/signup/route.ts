@@ -32,7 +32,7 @@ export async function POST(req: NextRequest) {
 
   const existing = await db.user.findUnique({ where: { email: emailLower } });
   if (existing) {
-    // Don't leak existence — return generic message.
+    // Don't leak existence - return generic message.
     return NextResponse.json(
       { error: "An account with this email already exists. Try logging in." },
       { status: 409 },

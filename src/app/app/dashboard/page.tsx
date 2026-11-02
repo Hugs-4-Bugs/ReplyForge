@@ -114,7 +114,7 @@ export default async function DashboardPage() {
                     <div>
                       <div className="font-medium">{p.name}</div>
                       <div className="text-xs text-muted-foreground">
-                        {p._count.questions} questions · {p.client ?? "—"} · {new Date(p.updatedAt).toLocaleDateString()}
+                        {p._count.questions} questions · {p.client ?? "-"} · {new Date(p.updatedAt).toLocaleDateString()}
                       </div>
                     </div>
                     <div className="flex items-center gap-2">

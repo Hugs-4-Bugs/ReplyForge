@@ -187,7 +187,7 @@ function EntryFormDialog({
 
   // The parent uses key={editing?.id ?? 'new'} to remount this component
   // whenever the editing target changes, so the initial useState values
-  // above are always fresh — no useEffect needed.
+  // above are always fresh - no useEffect needed.
 
   async function submit(e: React.FormEvent) {
     e.preventDefault();
@@ -240,7 +240,7 @@ function EntryFormDialog({
               </datalist>
             </div>
             <div className="space-y-2">
-              <Label htmlFor="conf">Confidence (0–1)</Label>
+              <Label htmlFor="conf">Confidence (0-1)</Label>
               <Input id="conf" type="number" min="0" max="1" step="0.1" value={form.confidence} onChange={(e) => setForm({ ...form, confidence: e.target.value })} />
             </div>
           </div>

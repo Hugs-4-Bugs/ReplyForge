@@ -44,7 +44,7 @@ export default async function BillingPage() {
       {stripeMode === "dev" && (
         <Alert className="mb-6 border-amber-300 bg-amber-50 text-amber-900">
           <AlertCircle className="h-4 w-4" />
-          <AlertTitle>Dev mode — billing is not charging</AlertTitle>
+          <AlertTitle>Dev mode - billing is not charging</AlertTitle>
           <AlertDescription>
             <code className="bg-amber-100 px-1 rounded">STRIPE_SECRET_KEY</code> is not set, so
             plan switches are applied instantly without charging. Set Stripe env vars and the

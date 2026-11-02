@@ -9,7 +9,7 @@ import { Sparkles, ArrowRight } from "lucide-react";
 // This page handles two cases:
 // 1. A user with no organization (e.g. accepted an invite but had no account,
 //    then somehow lost the membership). Prompt them to create one.
-// 2. A user with multiple organizations — let them pick which to activate.
+// 2. A user with multiple organizations - let them pick which to activate.
 //
 // In normal signup flow, an organization is created atomically with the user,
 // so this page is rarely reached. But the route must exist so that

@@ -72,7 +72,7 @@ export async function POST(
   }
   const toDraft = targets.slice(0, remaining);
   if (toDraft.length < targets.length) {
-    // partial — note it in the response
+    // partial - note it in the response
   }
 
   // Load content library + documents once

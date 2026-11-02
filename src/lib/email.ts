@@ -1,7 +1,7 @@
 // Email sending. Uses nodemailer with SMTP env vars. If SMTP is not
 // configured, we log the email to the server log + return it in the response
 // so the developer can see what would have been sent. This file NEVER
-// silently swallows the email — the caller knows whether it was delivered.
+// silently swallows the email - the caller knows whether it was delivered.
 
 import nodemailer, { type Transporter } from "nodemailer";
 

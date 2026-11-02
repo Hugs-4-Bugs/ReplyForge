@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { db } from "@/lib/db";
 import { audit } from "@/lib/audit";
 
-// GET /api/invites/[token] — preview invite (who invited you, what role)
+// GET /api/invites/[token] - preview invite (who invited you, what role)
 export async function GET(
   req: NextRequest,
   ctx: { params: Promise<{ token: string }> },
@@ -23,8 +23,8 @@ export async function GET(
   });
 }
 
-// POST /api/invites/[token] — accept the invite
-// Body: { name?, password } — creates account if user doesn't exist, else links.
+// POST /api/invites/[token] - accept the invite
+// Body: { name?, password } - creates account if user doesn't exist, else links.
 export async function POST(
   req: NextRequest,
   ctx: { params: Promise<{ token: string }> },

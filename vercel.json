@@ -1,13 +1,12 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "framework": "nextjs",
-  "buildCommand": "bun run build",
+  "buildCommand": "prisma generate && next build",
   "installCommand": "bun install",
   "devCommand": "bun run dev",
   "build": {
     "env": {
-      "NEXT_TELEMETRY_DISABLED": "1",
-      "DATABASE_PROVIDER": "postgresql"
+      "NEXT_TELEMETRY_DISABLED": "1"
     }
   },
   "functions": {

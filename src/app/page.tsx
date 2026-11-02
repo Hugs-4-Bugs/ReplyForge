@@ -50,7 +50,7 @@ export default function Home() {
         </div>
       </header>
 
-      {/* HERO — animated, with before/after comparison */}
+      {/* HERO - animated, with before/after comparison */}
       <Hero />
 
       {/* PROBLEM */}
@@ -66,7 +66,7 @@ export default function Home() {
                 Your sales team finally closes the demo. Procurement says yes. Then a 200-row Excel lands in your inbox: encryption, access reviews, sub-processors, incident response, data residency, DPA, SOC 2, ISO 27001. It's due Friday. Your CTO and Head of Legal spend the next two days chasing answers across Slack, Notion, last quarter's SOC 2 report, and a shared spreadsheet that nobody owns.
               </p>
               <p className="mt-4 text-muted-foreground">
-                The big RFP tools — <strong>Loopio ($15K–$150K/yr)</strong>, <strong>Responsive ($10K+/yr)</strong>, <strong>Conveyor ($9.6K/yr)</strong> — are built for enterprise proposal teams of 10+. They seat-price you to death and need a 6-week implementation. So most SMB SaaS teams keep drowning in spreadsheets and losing deals.
+                The big RFP tools - <strong>Loopio ($15K-$150K/yr)</strong>, <strong>Responsive ($10K+/yr)</strong>, <strong>Conveyor ($9.6K/yr)</strong> - are built for enterprise proposal teams of 10+. They seat-price you to death and need a 6-week implementation. So most SMB SaaS teams keep drowning in spreadsheets and losing deals.
               </p>
               <p className="mt-4 font-medium">
                 We built ReplyForge for the team that doesn't have a dedicated proposal manager.
@@ -75,10 +75,10 @@ export default function Home() {
             <Card className="p-6">
               <div className="space-y-4">
                 {[
-                  { label: "Avg. hours per questionnaire (manual)", val: "20–40 hrs", bad: true },
-                  { label: "Avg. hours per questionnaire (ReplyForge)", val: "1–3 hrs", bad: false },
-                  { label: "Avg. deal value gated by questionnaire", val: "$50K–$500K", bad: false },
-                  { label: "Avg. annual cost of Loopio (mid-market)", val: "$30K–$60K", bad: true },
+                  { label: "Avg. hours per questionnaire (manual)", val: "20-40 hrs", bad: true },
+                  { label: "Avg. hours per questionnaire (ReplyForge)", val: "1-3 hrs", bad: false },
+                  { label: "Avg. deal value gated by questionnaire", val: "$50K-$500K", bad: false },
+                  { label: "Avg. annual cost of Loopio (mid-market)", val: "$30K-$60K", bad: true },
                   { label: "Avg. annual cost of ReplyForge (Pro)", val: "$3,588", bad: false },
                 ].map((r, i) => (
                   <div key={i} className="flex items-center justify-between">
@@ -109,7 +109,7 @@ export default function Home() {
           </div>
           <div className="mt-12 grid gap-6 md:grid-cols-4">
             {[
-              { n: "1", title: "Upload the questionnaire", body: "Drag in an Excel, CSV, Word doc, or PDF. We parse every question — preserving IDs, sections, and categories — into a clean review queue." },
+              { n: "1", title: "Upload the questionnaire", body: "Drag in an Excel, CSV, Word doc, or PDF. We parse every question - preserving IDs, sections, and categories - into a clean review queue." },
               { n: "2", title: "AI drafts every answer", body: "Each question is matched against your approved Q&A library and your uploaded reference docs (SOC 2, policies, whitepapers). The AI writes a grounded answer with confidence and source citations." },
               { n: "3", title: "Review & approve", body: "Filter by confidence, assign flagged answers to SMEs, edit in-line. Every change is audit-logged. Nothing leaves your tenant." },
               { n: "4", title: "Export in the original format", body: "Download a filled Excel that mirrors the source file's structure, or copy answers into the buyer's portal. Your library learns from every approved edit." },
@@ -143,7 +143,7 @@ export default function Home() {
               { icon: Lock, title: "Source citations on every answer", body: "Every draft cites the exact approved entry or document snippet it came from. Reviewers can verify in one click. Auditors love it." },
               { icon: Users, title: "Reviewer assignments & statuses", body: "Flag low-confidence answers, assign to SMEs by category, track status (draft → needs review → approved). Built for a 3-person team, not a 30-person one." },
               { icon: Building2, title: "Multi-tenant from day one", body: "Strict tenant isolation enforced at the data layer. Every query is scoped to your organization. Your data is never visible to another customer." },
-              { icon: Clock, title: "Audit log", body: "Every meaningful action — project created, answer approved, member invited — is recorded with user, IP, and timestamp. Exportable for SOC 2 evidence." },
+              { icon: Clock, title: "Audit log", body: "Every meaningful action - project created, answer approved, member invited - is recorded with user, IP, and timestamp. Exportable for SOC 2 evidence." },
               { icon: Zap, title: "Excel + CSV export", body: "Download a filled spreadsheet that mirrors the source file's columns. Paste into the buyer's portal in one shot. No more copy-paste-by-cell." },
               { icon: CheckCircle2, title: "Real billing, real Stripe", body: "Upgrade/downgrade/cancel from the UI. Stripe webhooks handle subscription state. No sales calls required to start." },
             ].map((f, i) => (
@@ -166,7 +166,7 @@ export default function Home() {
               How we stack up against the incumbents.
             </h2>
             <p className="mt-4 text-muted-foreground">
-              Public pricing as of November 2026. We don't invent competitor shortcomings — these come from their own pricing pages and G2/Capterra review patterns.
+              Public pricing as of November 2026. We don't invent competitor shortcomings - these come from their own pricing pages and G2/Capterra review patterns.
             </p>
           </div>
           <Card className="mt-12 overflow-hidden">
@@ -183,17 +183,17 @@ export default function Home() {
                 </thead>
                 <tbody className="divide-y">
                   {[
-                    ["Starting price", "$0 (Free) / $99 Starter", "$15K–$150K / yr*", "$10K / yr", "$9,600 / yr"],
+                    ["Starting price", "$0 (Free) / $99 Starter", "$15K-$150K / yr*", "$10K / yr", "$9,600 / yr"],
                     ["Pricing model", "Flat per-org", "Seat-based, opaque", "Platform fee + per-user add-ons", "Per-org, tiered"],
-                    ["Per-seat trap", "No — flat seats per plan", "Yes — pay per SME", "Yes — pay per user add-on", "Limited"],
+                    ["Per-seat trap", "No - flat seats per plan", "Yes - pay per SME", "Yes - pay per user add-on", "Limited"],
                     ["Implementation", "Self-serve, ~5 min", "6-week onboarding", "Consultant-led", "Self-serve"],
-                    ["AI first drafts", "Yes — grounded + cited", "Yes — from static library", "Yes — generative", "Yes — from library"],
+                    ["AI first drafts", "Yes - grounded + cited", "Yes - from static library", "Yes - generative", "Yes - from library"],
                     ["Source citations on every answer", "Yes", "Limited", "Yes (TRACE score)", "Yes"],
                     ["Excel/CSV/DOCX/PDF import", "All four", "Excel + portals", "Excel + portals", "Excel + portals"],
                     ["Export mirrors source format", "Yes", "Partial", "Partial", "Partial"],
                     ["Audit log", "Yes (exportable)", "Enterprise tier", "Enterprise tier", "Higher tier"],
-                    ["Minimum contract", "None — cancel anytime", "Annual", "Annual", "Annual"],
-                    ["Public pricing page", "Yes — see below", "No — quote-only", "Starts at $10K", "Yes"],
+                    ["Minimum contract", "None - cancel anytime", "Annual", "Annual", "Annual"],
+                    ["Public pricing page", "Yes - see below", "No - quote-only", "Starts at $10K", "Yes"],
                   ].map((row, i) => (
                     <tr key={i} className={i % 2 === 0 ? "bg-background" : "bg-muted/20"}>
                       <td className="px-4 py-3 font-medium">{row[0]}</td>
@@ -222,7 +222,7 @@ export default function Home() {
               Flat per-org. No per-seat traps. Cancel anytime.
             </h2>
             <p className="mt-4 text-muted-foreground">
-              Every plan includes the full workflow — upload, AI draft, review, export. Higher tiers raise the limits and add API + SSO.
+              Every plan includes the full workflow - upload, AI draft, review, export. Higher tiers raise the limits and add API + SSO.
             </p>
           </div>
           <div className="mt-12 grid gap-6 lg:grid-cols-4">
@@ -264,7 +264,7 @@ export default function Home() {
             })}
           </div>
           <p className="mt-8 text-center text-xs text-muted-foreground">
-            All prices in USD. Billed via Stripe. Dev-mode (no Stripe key configured) activates plans instantly without charging — set <code className="bg-muted px-1 py-0.5 rounded">STRIPE_SECRET_KEY</code> to go live.
+            All prices in USD. Billed via Stripe. Dev-mode (no Stripe key configured) activates plans instantly without charging - set <code className="bg-muted px-1 py-0.5 rounded">STRIPE_SECRET_KEY</code> to go live.
           </p>
         </div>
       </section>
@@ -310,7 +310,7 @@ export default function Home() {
             <div className="flex h-6 w-6 items-center justify-center rounded bg-primary text-primary-foreground">
               <Sparkles className="h-3 w-3" />
             </div>
-            <span>ReplyForge — security questionnaire response for SMB SaaS.</span>
+            <span>ReplyForge - security questionnaire response for SMB SaaS.</span>
           </div>
           <div className="flex gap-6">
             <Link href="/login">Log in</Link>

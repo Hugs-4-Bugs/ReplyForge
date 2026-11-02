@@ -185,7 +185,7 @@ export function BillingClient({ currentPlanId, usage, cancelAtPeriodEnd, invoice
                 <div key={inv.id} className="flex items-center justify-between py-2 text-sm">
                   <div>
                     <div className="font-medium">
-                      {new Date(inv.periodStart).toLocaleDateString()} – {new Date(inv.periodEnd).toLocaleDateString()}
+                      {new Date(inv.periodStart).toLocaleDateString()} - {new Date(inv.periodEnd).toLocaleDateString()}
                     </div>
                     <div className="text-xs text-muted-foreground">
                       {(inv.amountPaid / 100).toFixed(2)} {inv.currency.toUpperCase()} · {inv.status}

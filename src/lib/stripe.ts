@@ -1,7 +1,7 @@
 // Stripe integration. When STRIPE_SECRET_KEY is set, billing is REAL.
 // When it's not, we run in DEV MODE: subscriptions are auto-activated on
 // plan selection (no charge), so the rest of the workflow stays testable.
-// This file never pretends to charge — it's explicit about which mode it's in.
+// This file never pretends to charge - it's explicit about which mode it's in.
 
 import Stripe from "stripe";
 import { db } from "@/lib/db";
@@ -99,7 +99,7 @@ export async function cancelAtPeriodEnd(orgId: string): Promise<{ ok: boolean; e
   return { ok: true };
 }
 
-// Stripe webhook handler — must be idempotent. Called from /api/stripe/webhook.
+// Stripe webhook handler - must be idempotent. Called from /api/stripe/webhook.
 export async function handleWebhookEvent(event: Stripe.Event): Promise<void> {
   // Idempotency: we use the Stripe event id as a unique key by storing it in
   // the audit log and checking for prior processing.

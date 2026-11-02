@@ -1,4 +1,4 @@
-// File parsing — extract questions from uploaded questionnaires.
+// File parsing - extract questions from uploaded questionnaires.
 // Supports .xlsx, .xls, .csv, .docx, .pdf, .txt. Returns a normalized list
 // of {externalId, text, category?} records.
 

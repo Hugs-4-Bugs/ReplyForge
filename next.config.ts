@@ -7,28 +7,23 @@ const nextConfig: NextConfig = {
   typescript: {
     ignoreBuildErrors: true,
   },
-  eslint: {
-    ignoreDuringBuilds: true,
-  },
   reactStrictMode: false,
   // sharp is already a dependency; this ensures Vercel uses it for image opt.
   images: {
     formats: ["image/avif", "image/webp"],
   },
-  // pdf-parse and mammoth use Node APIs that don't work on Edge runtime.
-  // Force all API routes to Node runtime (not Edge).
-  experimental: {
-    // Next 15+ — keep serverComponentsExternalPackages for native deps
-    serverComponentsExternalPackages: [
-      "bcryptjs",
-      "mammoth",
-      "pdf-parse",
-      "xlsx",
-      "nodemailer",
-      "stripe",
-      "@prisma/client",
-    ],
-  },
+  // Next.js 16: `serverExternalPackages` (top-level, not under experimental).
+  // Tells Next.js to NOT bundle these Node-only packages; they're required
+  // at runtime (native deps, Prisma client, etc.).
+  serverExternalPackages: [
+    "bcryptjs",
+    "mammoth",
+    "pdf-parse",
+    "xlsx",
+    "nodemailer",
+    "stripe",
+    "@prisma/client",
+  ],
 };
 
 export default nextConfig;

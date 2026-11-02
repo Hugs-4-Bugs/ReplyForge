@@ -46,32 +46,32 @@ function Counter({
 const beforeAfterData = [
   {
     metric: "Time per questionnaire",
-    before: { value: "20–40", unit: "hours", icon: Clock },
-    after: { value: "1–3", unit: "hours", icon: Zap },
+    before: { value: "20-40", unit: "hours", icon: Clock },
+    after: { value: "1-3", unit: "hours", icon: Zap },
     savings: "92% faster",
   },
   {
     metric: "Annual software cost",
-    before: { value: "$15K–$150K", unit: "/yr (Loopio)", icon: DollarSign },
+    before: { value: "$15K-$150K", unit: "/yr (Loopio)", icon: DollarSign },
     after: { value: "$1,188", unit: "/yr (Starter)", icon: DollarSign },
     savings: "96% cheaper",
   },
   {
     metric: "Deal slip time",
-    before: { value: "1–2", unit: "weeks", icon: TrendingDown },
+    before: { value: "1-2", unit: "weeks", icon: TrendingDown },
     after: { value: "0", unit: "days", icon: TrendingUp },
     savings: "Same-day response",
   },
   {
     metric: "People pulled in",
-    before: { value: "3–5", unit: "(CTO, Legal, Sec)", icon: Users },
+    before: { value: "3-5", unit: "(CTO, Legal, Sec)", icon: Users },
     after: { value: "1", unit: "(reviewer only)", icon: Users },
     savings: "85% less SME time",
   },
 ];
 
 const trustStats = [
-  { value: 1700, suffix: "+", label: "Loopio customers paying $15K–$150K/yr (proof of demand)", decimals: 0 },
+  { value: 1700, suffix: "+", label: "Loopio customers paying $15K-$150K/yr (proof of demand)", decimals: 0 },
   { value: 24, suffix: "+ hrs", label: "saved per questionnaire (SiftHub, 2026)", decimals: 0 },
   { value: 90, suffix: "%", label: "reduction in completion time (industry data)", decimals: 0 },
   { value: 500, prefix: "$", suffix: "K", label: "avg deal value gated by questionnaires", decimals: 0 },
@@ -161,7 +161,7 @@ export function Hero() {
           transition={{ duration: 0.6, delay: 0.3 }}
           className="mx-auto mt-6 max-w-3xl text-pretty text-center text-lg text-muted-foreground md:text-xl"
         >
-          ReplyForge drafts defensible answers from your own approved content library —
+          ReplyForge drafts defensible answers from your own approved content library -
           with source citations on every line. The same workflow Loopio charges{" "}
           <span className="font-semibold text-foreground">$30K+/year</span> for, at{" "}
           <span className="font-semibold text-foreground">$99/month</span>. No seat traps. No contract. No implementation fee.
@@ -177,7 +177,7 @@ export function Hero() {
           <Link href="/signup">
             <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.97 }}>
               <Button size="lg" className="w-full sm:w-auto">
-                Start free — no card <ArrowRight className="ml-1 h-4 w-4" />
+                Start free - no card <ArrowRight className="ml-1 h-4 w-4" />
               </Button>
             </motion.div>
           </Link>
@@ -343,9 +343,9 @@ export function Hero() {
                   </h3>
                   <p className="text-sm text-green-800">
                     Average enterprise deal gated by a questionnaire:{" "}
-                    <strong>$50K–$500K</strong>. ReplyForge Starter:{" "}
+                    <strong>$50K-$500K</strong>. ReplyForge Starter:{" "}
                     <strong>$1,188/year</strong>. ROI:{" "}
-                    <strong>42×–421× on a single deal</strong>.
+                    <strong>42×-421× on a single deal</strong>.
                   </p>
                 </div>
               </div>

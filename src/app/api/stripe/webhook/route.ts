@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { stripe, stripeMode, handleWebhookEvent } from "@/lib/stripe";
 import Stripe from "stripe";
 
-// Stripe webhook. Reads raw body — must NOT use the JSON body parser.
+// Stripe webhook. Reads raw body - must NOT use the JSON body parser.
 export async function POST(req: NextRequest) {
   if (stripeMode !== "live" || !stripe) {
     return NextResponse.json(

@@ -62,7 +62,7 @@ export default async function ProjectsPage() {
                       </Badge>
                     </div>
                     <p className="text-xs text-muted-foreground">
-                      {p.client ?? "—"} · {p.type.replace(/_/g, " ")}
+                      {p.client ?? "-"} · {p.type.replace(/_/g, " ")}
                     </p>
                   </CardHeader>
                   <CardContent>

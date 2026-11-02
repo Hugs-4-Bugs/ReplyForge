@@ -119,7 +119,7 @@ export default function NewProjectPage() {
           <CardContent className="space-y-4">
             <div className="space-y-2">
               <Label htmlFor="name">Project name *</Label>
-              <Input id="name" required value={name} onChange={(e) => setName(e.target.value)} placeholder="Acme Corp — Security Questionnaire Q4" />
+              <Input id="name" required value={name} onChange={(e) => setName(e.target.value)} placeholder="Acme Corp - Security Questionnaire Q4" />
             </div>
             <div className="grid gap-4 md:grid-cols-2">
               <div className="space-y-2">
@@ -176,7 +176,7 @@ export default function NewProjectPage() {
               />
             </label>
 
-            <div className="text-center text-xs text-muted-foreground">— or —</div>
+            <div className="text-center text-xs text-muted-foreground">- or -</div>
 
             <div className="space-y-2">
               <Label htmlFor="paste">Paste questions</Label>

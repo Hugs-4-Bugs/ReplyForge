@@ -14,9 +14,9 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "ReplyForge — Answer security questionnaires in minutes",
+  title: "ReplyForge - Answer security questionnaires in minutes",
   description:
-    "ReplyForge drafts defensible answers to security questionnaires and RFPs from your own approved content library — with source citations on every line. The same workflow Loopio charges $30K+/yr for, at $99/mo.",
+    "ReplyForge drafts defensible answers to security questionnaires and RFPs from your own approved content library - with source citations on every line. The same workflow Loopio charges $30K+/yr for, at $99/mo.",
   keywords: [
     "security questionnaire",
     "RFP response",
@@ -34,18 +34,18 @@ export const metadata: Metadata = {
     icon: "/favicon.svg",
   },
   openGraph: {
-    title: "ReplyForge — Answer security questionnaires in minutes",
+    title: "ReplyForge - Answer security questionnaires in minutes",
     description:
-      "Drafts defensible answers from your approved content library — with source citations. $99/mo instead of Loopio's $30K/yr.",
+      "Drafts defensible answers from your approved content library - with source citations. $99/mo instead of Loopio's $30K/yr.",
     url: "https://replyforge.app",
     siteName: "ReplyForge",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "ReplyForge — Security questionnaire response for SMB SaaS",
+    title: "ReplyForge - Security questionnaire response for SMB SaaS",
     description:
-      "Same workflow Loopio charges $30K+/yr for. $99–$799/mo. No seat traps, no contract, no implementation fee.",
+      "Same workflow Loopio charges $30K+/yr for. $99-$799/mo. No seat traps, no contract, no implementation fee.",
   },
 };
 

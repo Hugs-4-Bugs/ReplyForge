@@ -172,7 +172,7 @@ export function ProjectWorkspace({ project }: { project: Project }) {
           </Link>
           <h1 className="truncate text-2xl font-bold tracking-tight">{project.name}</h1>
           <p className="text-sm text-muted-foreground">
-            {project.client ?? "—"} · {project.type.replace(/_/g, " ")}
+            {project.client ?? "-"} · {project.type.replace(/_/g, " ")}
             {project.dueDate && ` · due ${new Date(project.dueDate).toLocaleDateString()}`}
           </p>
         </div>
@@ -314,7 +314,7 @@ function QuestionEditor({
         <div className="flex items-start justify-between gap-2">
           <div className="flex-1">
             <div className="mb-1 flex items-center gap-2">
-              <span className="font-mono text-xs text-muted-foreground">{question.externalId ?? "—"}</span>
+              <span className="font-mono text-xs text-muted-foreground">{question.externalId ?? "-"}</span>
               {question.category && <Badge variant="outline" className="text-[10px]">{question.category}</Badge>}
             </div>
             <p className="text-base font-medium leading-snug">{question.text}</p>
@@ -387,7 +387,7 @@ function QuestionEditor({
             )}
 
             <div className="rounded-md bg-muted/50 p-2 text-xs text-muted-foreground">
-              AI model: <code className="bg-background px-1 py-0.5 rounded">{question.answer.aiModel ?? "—"}</code>
+              AI model: <code className="bg-background px-1 py-0.5 rounded">{question.answer.aiModel ?? "-"}</code>
               {question.answer.approvedAt && ` · approved ${new Date(question.answer.approvedAt).toLocaleDateString()}`}
             </div>
           </div>

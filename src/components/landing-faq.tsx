@@ -10,11 +10,11 @@ import {
 const FAQS = [
   {
     q: "Is the AI making up answers?",
-    a: "No. Every draft is grounded in YOUR approved content library and the reference documents you upload. If the AI can't find a grounded answer, it returns \"We will provide this information on request.\" with low confidence — it never invents facts. Every draft also cites the source entry or document snippet it was built from, so a reviewer can verify in one click.",
+    a: "No. Every draft is grounded in YOUR approved content library and the reference documents you upload. If the AI can't find a grounded answer, it returns \"We will provide this information on request.\" with low confidence - it never invents facts. Every draft also cites the source entry or document snippet it was built from, so a reviewer can verify in one click.",
   },
   {
     q: "How is this different from just pasting the questionnaire into ChatGPT?",
-    a: "Three things. (1) Grounding: ChatGPT will happily invent answers from its training data; we constrain it to your content and cite every source. (2) Workflow: question parsing, reviewer assignment, status tracking, audit log, source-format export — none of that exists in a chat prompt. (3) Compliance: your data lives in a multi-tenant system with tenant isolation and an audit trail, which is what your enterprise buyers actually want to hear during procurement.",
+    a: "Three things. (1) Grounding: ChatGPT will happily invent answers from its training data; we constrain it to your content and cite every source. (2) Workflow: question parsing, reviewer assignment, status tracking, audit log, source-format export - none of that exists in a chat prompt. (3) Compliance: your data lives in a multi-tenant system with tenant isolation and an audit trail, which is what your enterprise buyers actually want to hear during procurement.",
   },
   {
     q: "Can I export back into the buyer's original Excel format?",
@@ -22,7 +22,7 @@ const FAQS = [
   },
   {
     q: "What happens when my plan limits are hit?",
-    a: "You get a clear in-app message naming the limit (e.g. \"15 projects/month on Starter\"). We never silently block work — you can upgrade from the billing page in one click, or wait for the next monthly reset. The Free plan resets on the 1st of each month.",
+    a: "You get a clear in-app message naming the limit (e.g. \"15 projects/month on Starter\"). We never silently block work - you can upgrade from the billing page in one click, or wait for the next monthly reset. The Free plan resets on the 1st of each month.",
   },
   {
     q: "Do you train AI models on my data?",

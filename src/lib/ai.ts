@@ -27,7 +27,7 @@ export type DraftContext = {
   relevantContent: { id: string; question: string; answer: string; category?: string | null }[];
   // Snippets from uploaded documents that look relevant
   relevantSnippets: { id: string; filename: string; snippet: string }[];
-  // Company context (org name, what they sell) — improves answer tone
+  // Company context (org name, what they sell) - improves answer tone
   companyContext?: string;
 };
 
@@ -140,7 +140,7 @@ function fallbackDraft(
   };
 }
 
-// Lightweight retrieval — keyword overlap scoring. Good enough for v1 and
+// Lightweight retrieval - keyword overlap scoring. Good enough for v1 and
 // avoids the cost/complexity of vector embeddings. Returns top-k.
 export function retrieveRelevant<T extends { question: string; answer?: string; category?: string | null }>(
   query: string,
