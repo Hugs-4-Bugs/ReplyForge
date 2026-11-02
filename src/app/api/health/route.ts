@@ -92,12 +92,14 @@ export async function GET() {
       checks,
       hint:
         !checks.env_DATABASE_URL?.ok
-          ? "DATABASE_URL is not set. Create a Postgres database (Neon, Supabase) and add the connection string to Vercel env vars."
-          : !checks.env_AUTH_SECRET?.ok
-            ? "AUTH_SECRET is not set. Generate one with: openssl rand -base64 32 and add it to Vercel env vars."
-            : !checks.db_connection?.ok
-              ? `DB connection failed: ${checks.db_connection?.error}. Make sure DATABASE_URL is a valid Postgres connection string (postgresql://user:pass@host:port/db) and the database is accessible from Vercel.`
-              : "All critical checks passed.",
+          ? "DATABASE_URL is NOT SET. Do this now: 1) Go to https://neon.tech and sign up (free). 2) Create a new project. 3) Copy the connection string (looks like postgresql://neondb:xxx@ep-xxx.neon.tech/neondb?sslmode=require). 4) In Vercel: Project Settings -> Environment Variables -> add DATABASE_URL with that connection string. 5) Redeploy."
+          : process.env.DATABASE_URL && process.env.DATABASE_URL.startsWith("file:")
+            ? "DATABASE_URL is set to a SQLite file path (file:...) but the schema requires Postgres. Vercel serverless can't use SQLite files. Create a Postgres database at https://neon.tech (free) and update DATABASE_URL in Vercel env vars to the Postgres connection string."
+            : !checks.env_AUTH_SECRET?.ok
+              ? "AUTH_SECRET is not set. Generate one with: openssl rand -base64 32 and add it to Vercel env vars."
+              : !checks.db_connection?.ok
+                ? `DB connection failed: ${checks.db_connection?.error}. Make sure DATABASE_URL is a valid Postgres connection string (postgresql://user:pass@host:port/db) and the database is accessible from Vercel. Also run 'npx prisma db push' with your DATABASE_URL to create the tables.`
+                : "All critical checks passed. If signup still fails, run 'npx prisma db push --url=YOUR_DATABASE_URL' locally to create the database tables.",
     },
     { status: criticalOk ? 200 : 500 },
   );
