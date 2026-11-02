@@ -1,0 +1,309 @@
+// ReplyForge — Prisma schema
+// Multi-tenant B2B SaaS for security questionnaire + RFP response.
+// Tenant isolation is enforced at the application layer: every tenant-scoped
+// query MUST filter by organizationId. See src/lib/tenant.ts.
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+// ---------------------------------------------------------------------------
+// Auth (NextAuth credentials provider + Prisma adapter tables)
+// ---------------------------------------------------------------------------
+
+model User {
+  id            String    @id @default(cuid())
+  email         String    @unique
+  name          String?
+  passwordHash  String?
+  emailVerified DateTime?
+  image         String?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  accounts        Account[]
+  sessions        Session[]
+  memberships     Membership[]
+  ownedOrgs       Organization[] @relation("OrgOwner")
+  createdContent  ContentEntry[] @relation("ContentAuthor")
+  createdProjects Project[]      @relation("ProjectCreator")
+  assignedAnswers Answer[]       @relation("AnswerAssignee")
+  auditLogs       AuditLog[]
+}
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String?
+  access_token      String?
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?
+
+  user User @relation(onDelete: Cascade, fields: [userId], references: [id])
+
+  @@unique([provider, providerAccountId])
+  @@index([userId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(onDelete: Cascade, fields: [userId], references: [id])
+
+  @@index([userId])
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@index([identifier])
+}
+
+// ---------------------------------------------------------------------------
+// Tenancy
+// ---------------------------------------------------------------------------
+
+model Organization {
+  id        String   @id @default(cuid())
+  name      String
+  slug      String   @unique
+  ownerId   String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  owner        User           @relation("OrgOwner", fields: [ownerId], references: [id])
+  memberships  Membership[]
+  content      ContentEntry[]
+  documents    Document[]
+  projects     Project[]
+  answers      Answer[]
+  subscription Subscription?
+  auditLogs    AuditLog[]
+  apiKeys      ApiKey[]
+  invites      Invite[]
+}
+
+model Membership {
+  id             String   @id @default(cuid())
+  userId         String
+  organizationId String
+  role           String   @default("member") // owner | admin | member
+  createdAt      DateTime @default(now())
+
+  user         User         @relation(onDelete: Cascade, fields: [userId], references: [id])
+  organization Organization @relation(onDelete: Cascade, fields: [organizationId], references: [id])
+
+  @@unique([userId, organizationId])
+  @@index([organizationId])
+}
+
+model Invite {
+  id             String    @id @default(cuid())
+  email          String
+  organizationId String
+  role           String    @default("member")
+  token          String    @unique @default(cuid())
+  invitedBy      String
+  expiresAt      DateTime
+  acceptedAt     DateTime?
+  createdAt      DateTime  @default(now())
+
+  organization Organization @relation(onDelete: Cascade, fields: [organizationId], references: [id])
+
+  @@index([organizationId, email])
+}
+
+// ---------------------------------------------------------------------------
+// Content Library — approved Q&A pairs the AI drafts from
+// ---------------------------------------------------------------------------
+
+model ContentEntry {
+  id             String   @id @default(cuid())
+  organizationId String
+  question       String
+  answer         String
+  category       String? // e.g. "Security", "Privacy", "Infrastructure"
+  tags           String // comma-separated; SQLite has no native array
+  sourceDocument String? // human-readable source label
+  status         String   @default("approved") // draft | approved | archived
+  confidence     Float    @default(1.0) // 0..1, human-set
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+  authorId       String?
+
+  organization Organization @relation(onDelete: Cascade, fields: [organizationId], references: [id])
+  author       User?        @relation("ContentAuthor", fields: [userId], references: [id])
+  userId       String?
+
+  @@index([organizationId, status])
+  @@index([organizationId, category])
+}
+
+// ---------------------------------------------------------------------------
+// Documents — uploaded reference material (policies, SOC2, whitepapers, etc.)
+// Stored as text in DB for portability; production should use S3 + DB path.
+// ---------------------------------------------------------------------------
+
+model Document {
+  id             String   @id @default(cuid())
+  organizationId String
+  filename       String
+  mime           String
+  sizeBytes      Int
+  textContent    String // extracted plain text used for AI retrieval
+  summary        String? // short AI-generated summary
+  status         String   @default("ready") // processing | ready | failed
+  createdAt      DateTime @default(now())
+
+  organization Organization @relation(onDelete: Cascade, fields: [organizationId], references: [id])
+
+  @@index([organizationId, status])
+}
+
+// ---------------------------------------------------------------------------
+// Projects — a single questionnaire / RFP being responded to
+// ---------------------------------------------------------------------------
+
+model Project {
+  id             String    @id @default(cuid())
+  organizationId String
+  name           String
+  client         String? // buyer name
+  type           String    @default("security_questionnaire") // security_questionnaire | rfp | rfi | ddq
+  status         String    @default("draft") // draft | in_progress | in_review | submitted | archived
+  dueDate        DateTime?
+  notes          String?
+  createdById    String
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+
+  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  createdBy    User         @relation("ProjectCreator", fields: [createdById], references: [id])
+  questions    Question[]
+
+  @@index([organizationId, status])
+}
+
+model Question {
+  id         String  @id @default(cuid())
+  projectId  String
+  externalId String? // question number/label from source (e.g. "1.2", "Q15")
+  text       String
+  category   String?
+  answer     Answer?
+
+  project Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  @@index([projectId])
+}
+
+model Answer {
+  id             String    @id @default(cuid())
+  questionId     String    @unique
+  organizationId String // denormalized for fast tenant filtering
+  draft          String
+  final          String? // reviewed/edited answer; null = still in draft
+  confidence     Float     @default(0.0)
+  status         String    @default("draft") // draft | needs_review | approved | flagged
+  sources        String // JSON array of {contentEntryId, documentId, snippet}
+  assigneeId     String?
+  aiModel        String? // which model generated the draft
+  generatedAt    DateTime?
+  approvedAt     DateTime?
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+
+  question     Question     @relation(fields: [questionId], references: [id], onDelete: Cascade)
+  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  assignee     User?        @relation("AnswerAssignee", fields: [assigneeId], references: [id])
+
+  @@index([organizationId, status])
+}
+
+// ---------------------------------------------------------------------------
+// Billing — Stripe-backed subscription state
+// ---------------------------------------------------------------------------
+
+model Subscription {
+  id                   String    @id @default(cuid())
+  organizationId       String    @unique
+  plan                 String    @default("free") // free | starter | pro | business
+  status               String    @default("active") // active | trialing | past_due | canceled | incomplete
+  stripeCustomerId     String?   @unique
+  stripeSubscriptionId String?   @unique
+  stripePriceId        String?
+  currentPeriodEnd     DateTime?
+  cancelAtPeriodEnd    Boolean   @default(false)
+  seatsUsed            Int       @default(1)
+  createdAt            DateTime  @default(now())
+  updatedAt            DateTime  @updatedAt
+
+  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+}
+
+model Invoice {
+  id               String   @id @default(cuid())
+  organizationId   String
+  stripeInvoiceId  String   @unique
+  amountDue        Int
+  amountPaid       Int
+  currency         String   @default("usd")
+  status           String // draft | open | paid | uncollectible | void
+  hostedInvoiceUrl String?
+  invoicePdf       String?
+  periodStart      DateTime
+  periodEnd        DateTime
+  createdAt        DateTime @default(now())
+
+  @@index([organizationId])
+}
+
+// ---------------------------------------------------------------------------
+// Operational
+// ---------------------------------------------------------------------------
+
+model AuditLog {
+  id             String   @id @default(cuid())
+  organizationId String
+  userId         String?
+  action         String // e.g. "project.create", "answer.approve", "billing.upgrade"
+  targetType     String? // "project" | "answer" | "content" | "subscription"
+  targetId       String?
+  metadata       String // JSON string
+  ip             String?
+  createdAt      DateTime @default(now())
+
+  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  user         User?        @relation(fields: [userId], references: [id], onDelete: SetNull)
+
+  @@index([organizationId, createdAt])
+}
+
+model ApiKey {
+  id             String    @id @default(cuid())
+  organizationId String
+  label          String
+  keyPrefix      String // first 8 chars of the actual key, for display
+  hashedKey      String    @unique
+  lastUsedAt     DateTime?
+  revokedAt      DateTime?
+  createdAt      DateTime  @default(now())
+
+  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+
+  @@index([organizationId])
+}
