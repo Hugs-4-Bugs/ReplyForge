@@ -50,8 +50,10 @@ export default async function ProjectPage({ params }: { params: Promise<{ id: st
             status: q.answer.status,
             sources: q.answer.sources,
             aiModel: q.answer.aiModel,
+            fallback: q.answer.aiModel?.startsWith("fallback:") ?? false,
             assigneeId: q.answer.assigneeId,
             approvedAt: q.answer.approvedAt?.toISOString() ?? null,
+            updatedAt: q.answer.updatedAt.toISOString(),
           }
         : null,
     })),

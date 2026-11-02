@@ -3,7 +3,7 @@
 // so the developer can see what would have been sent. This file NEVER
 // silently swallows the email — the caller knows whether it was delivered.
 
-import nodemailer from "nodemailer";
+import nodemailer, { type Transporter } from "nodemailer";
 
 export type OutboundEmail = {
   to: string;
@@ -17,7 +17,7 @@ export type SendResult =
   | { ok: true; delivered: false; reason: "smtp-not-configured"; preview: OutboundEmail }
   | { ok: false; error: string };
 
-function transporter(): nodemailer.Transporter | null {
+function transporter(): Transporter | null {
   if (!process.env.SMTP_HOST || !process.env.SMTP_USER) return null;
   return nodemailer.createTransport({
     host: process.env.SMTP_HOST,

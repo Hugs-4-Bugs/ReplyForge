@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { db } from "@/lib/db";
+import { audit } from "@/lib/audit";
 
 // GET /api/invites/[token] — preview invite (who invited you, what role)
 export async function GET(

@@ -39,8 +39,9 @@ export async function POST(req: NextRequest) {
 
   const bytes = Buffer.from(await file.arrayBuffer());
   const result = await extractDocumentText({ filename: file.name, mime: file.type, bytes });
-  if (!result.ok || !result.text) {
-    return NextResponse.json({ error: result.error ?? "Could not extract text" }, { status: 400 });
+  if (!result.ok || !("text" in result) || !result.text) {
+    const errorMsg = !result.ok ? result.error : "Could not extract text";
+    return NextResponse.json({ error: errorMsg }, { status: 400 });
   }
 
   // Truncate to keep DB rows reasonable (SQLite + 10MB docs would explode the file)

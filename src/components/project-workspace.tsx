@@ -26,7 +26,9 @@ type Answer = {
   status: string;
   sources: string; // JSON
   aiModel: string | null;
+  fallback: boolean;
   approvedAt: string | null;
+  updatedAt?: string;
 };
 type Question = {
   id: string;
@@ -263,7 +265,10 @@ export function ProjectWorkspace({ project }: { project: Project }) {
         <Card className="flex h-[70vh] flex-col">
           {current ? (
             <QuestionEditor
-              key={current.id}
+              // Remount the editor when the question OR its answer changes
+              // (e.g. after draftAll creates a new answer for a previously
+              // undrafted question, or after Regenerate updates the draft).
+              key={`${current.id}-${current.answer?.id ?? "none"}-${current.answer?.updatedAt ?? ""}`}
               question={current}
               onDraft={() => draftOne(current.id)}
               onSave={saveAnswer}

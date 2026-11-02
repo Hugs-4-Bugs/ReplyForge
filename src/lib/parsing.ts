@@ -105,7 +105,8 @@ async function parseDocx(bytes: Buffer): Promise<ParsedQuestion[]> {
 async function parsePdf(bytes: Buffer): Promise<ParsedQuestion[]> {
   // Lazy-load to avoid loading pdf-parse when not needed (it can crash on
   // certain test PDFs in sandboxed environments).
-  const pdfParse = (await import("pdf-parse")).default;
+  const mod: any = await import("pdf-parse");
+  const pdfParse = mod.default ?? mod;
   const data = await pdfParse(bytes);
   return parseText(data.text);
 }
@@ -184,7 +185,8 @@ export async function extractDocumentText(opts: {
       return { ok: true, questions: [], text: r.value };
     }
     if (lower.endsWith(".pdf")) {
-      const pdfParse = (await import("pdf-parse")).default;
+      const mod: any = await import("pdf-parse");
+      const pdfParse = mod.default ?? mod;
       const d = await pdfParse(opts.bytes);
       return { ok: true, questions: [], text: d.text };
     }

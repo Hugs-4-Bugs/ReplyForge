@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { useSession } from "next-auth/react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -15,7 +14,6 @@ import type { ParsedQuestion } from "@/lib/parsing";
 
 export default function NewProjectPage() {
   const router = useRouter();
-  const { data: session } = useSession();
   const [step, setStep] = useState<"details" | "upload" | "review">("details");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);

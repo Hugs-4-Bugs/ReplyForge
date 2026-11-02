@@ -140,6 +140,12 @@ export async function handleWebhookEvent(event: Stripe.Event): Promise<void> {
       if (!orgId) break;
       const priceId = sub.items.data[0]?.price?.id;
       const plan = planFromPriceId(priceId) ?? (sub.metadata?.plan as PlanId | undefined) ?? "free";
+      // Stripe SDK v23 removed `current_period_end` from the typed interface,
+      // but the API still returns it. Access via cast.
+      const raw = sub as unknown as { current_period_end?: number };
+      const periodEnd = raw.current_period_end
+        ? new Date(raw.current_period_end * 1000)
+        : null;
       await db.subscription.upsert({
         where: { organizationId: orgId },
         create: {
@@ -149,9 +155,7 @@ export async function handleWebhookEvent(event: Stripe.Event): Promise<void> {
           stripeCustomerId: sub.customer as string,
           stripeSubscriptionId: sub.id,
           stripePriceId: priceId,
-          currentPeriodEnd: sub.current_period_end
-            ? new Date(sub.current_period_end * 1000)
-            : null,
+          currentPeriodEnd: periodEnd,
           cancelAtPeriodEnd: sub.cancel_at_period_end,
         },
         update: {
@@ -159,9 +163,7 @@ export async function handleWebhookEvent(event: Stripe.Event): Promise<void> {
           status: sub.status,
           stripeSubscriptionId: sub.id,
           stripePriceId: priceId,
-          currentPeriodEnd: sub.current_period_end
-            ? new Date(sub.current_period_end * 1000)
-            : null,
+          currentPeriodEnd: periodEnd,
           cancelAtPeriodEnd: sub.cancel_at_period_end,
         },
       });

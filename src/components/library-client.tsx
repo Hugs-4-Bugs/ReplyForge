@@ -133,6 +133,7 @@ export function LibraryClient({ entries: initial }: { entries: Entry[] }) {
       )}
 
       <EntryFormDialog
+        key={editing?.id ?? "new"}
         open={showForm}
         onOpenChange={setShowForm}
         editing={editing}
@@ -184,16 +185,9 @@ function EntryFormDialog({
   });
   const [loading, setLoading] = useState(false);
 
-  // Reset when editing target changes
-  useState(() => {
-    setForm({
-      question: editing?.question ?? "",
-      answer: editing?.answer ?? "",
-      category: editing?.category ?? "",
-      tags: editing?.tags ?? "",
-      confidence: editing ? String(editing.confidence) : "1.0",
-    });
-  });
+  // The parent uses key={editing?.id ?? 'new'} to remount this component
+  // whenever the editing target changes, so the initial useState values
+  // above are always fresh — no useEffect needed.
 
   async function submit(e: React.FormEvent) {
     e.preventDefault();
