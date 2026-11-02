@@ -1,0 +1,32 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "framework": "nextjs",
+  "buildCommand": "bun run build",
+  "installCommand": "bun install",
+  "devCommand": "bun run dev",
+  "build": {
+    "env": {
+      "NEXT_TELEMETRY_DISABLED": "1",
+      "DATABASE_PROVIDER": "postgresql"
+    }
+  },
+  "functions": {
+    "src/app/api/stripe/webhook/route.ts": {
+      "memory": 512,
+      "maxDuration": 30
+    },
+    "src/app/api/projects/[id]/draft/route.ts": {
+      "memory": 1024,
+      "maxDuration": 60
+    },
+    "src/app/api/projects/parse-upload/route.ts": {
+      "memory": 1024,
+      "maxDuration": 60
+    },
+    "src/app/api/documents/route.ts": {
+      "memory": 1024,
+      "maxDuration": 60
+    }
+  },
+  "crons": []
+}

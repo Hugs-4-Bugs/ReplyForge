@@ -8,7 +8,17 @@ generator client {
 }
 
 datasource db {
-  provider = "sqlite"
+  // Vercel deployment: Postgres (Neon, Supabase, etc.)
+  // Set DATABASE_URL=postgresql://... in Vercel env vars.
+  //
+  // Local dev (offline): this schema uses Postgres, but the local sandbox
+  // has no Postgres installed. To run locally, either:
+  //   1. Set up a local Postgres and point DATABASE_URL at it, OR
+  //   2. Temporarily change `provider` to "sqlite" and DATABASE_URL to
+  //      "file:/home/z/my-project/db/custom.db" for offline testing.
+  // The data model is identical for both providers (Prisma handles the
+  // type differences automatically).
+  provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
