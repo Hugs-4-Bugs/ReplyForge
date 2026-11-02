@@ -29,12 +29,12 @@ export default async function AppLayout({ children }: { children: React.ReactNod
       />
       <div className="flex flex-1 flex-col">
         <header className="flex h-14 items-center justify-between border-b bg-background px-4 md:px-6">
-          <div className="flex items-center gap-2 md:hidden">
+          <Link href="/" className="flex items-center gap-2 md:hidden" title="Go to home">
             <div className="flex h-6 w-6 items-center justify-center rounded bg-primary text-primary-foreground">
               <Sparkles className="h-3 w-3" />
             </div>
             <span className="font-semibold">{org.name}</span>
-          </div>
+          </Link>
           <div className="hidden md:block" />
           <div className="flex items-center gap-3">
             <Link

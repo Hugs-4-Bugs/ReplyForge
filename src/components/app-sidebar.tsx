@@ -45,17 +45,21 @@ export function AppSidebar({
 
   return (
     <aside className="hidden w-60 shrink-0 border-r bg-background md:flex md:flex-col">
-      <div className="flex h-14 items-center gap-2 border-b px-4">
+      <Link
+        href="/"
+        className="flex h-14 items-center gap-2 border-b px-4 transition-colors hover:bg-muted/50"
+        title="Go to home"
+      >
         <div className="flex h-7 w-7 items-center justify-center rounded-md bg-primary text-primary-foreground">
           <Sparkles className="h-4 w-4" />
         </div>
         <div className="min-w-0">
           <div className="truncate text-sm font-semibold">{orgName}</div>
           <div className="text-[10px] uppercase tracking-wider text-muted-foreground">
-            {planName} plan
+            {planName} plan · ← home
           </div>
         </div>
-      </div>
+      </Link>
 
       <div className="p-3">
         <Link href="/app/projects/new">

@@ -18,6 +18,7 @@ import {
   ChevronDown,
 } from "lucide-react";
 import { LandingFAQ } from "@/components/landing-faq";
+import { Hero } from "@/components/hero";
 
 export default function Home() {
   return (
@@ -49,54 +50,8 @@ export default function Home() {
         </div>
       </header>
 
-      {/* HERO */}
-      <section className="relative overflow-hidden border-b">
-        <div className="absolute inset-0 -z-10 bg-[radial-gradient(60%_50%_at_50%_0%,oklch(0.96_0.02_240)_0%,transparent_70%)]" />
-        <div className="mx-auto max-w-6xl px-4 py-16 md:py-24">
-          <div className="mx-auto max-w-3xl text-center">
-            <Badge variant="secondary" className="mb-4">
-              <Shield className="mr-1 h-3 w-3" /> Built for SMB SaaS closing enterprise deals
-            </Badge>
-            <h1 className="text-balance text-4xl font-bold tracking-tight md:text-6xl">
-              Answer security questionnaires in <span className="text-primary">minutes</span>, not days.
-            </h1>
-            <p className="mt-6 text-pretty text-lg text-muted-foreground md:text-xl">
-              ReplyForge drafts defensible answers from your own approved content library and reference docs — with source citations on every line. The same workflow Loopio and Responsive sell for $10K–$150K/year, for $99–$799/month. No seat traps. No 12-month contract.
-            </p>
-            <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
-              <Link href="/signup">
-                <Button size="lg" className="w-full sm:w-auto">
-                  Start free — no card <ArrowRight className="ml-1 h-4 w-4" />
-                </Button>
-              </Link>
-              <a href="#how">
-                <Button size="lg" variant="outline" className="w-full sm:w-auto">
-                  See how it works
-                </Button>
-              </a>
-            </div>
-            <p className="mt-4 text-xs text-muted-foreground">
-              Free plan: 2 questionnaires/month, 25 questions each, 25 AI drafts. No credit card.
-            </p>
-          </div>
-
-          {/* Numbers strip */}
-          <div className="mt-16 grid grid-cols-2 gap-4 md:grid-cols-4">
-            {[
-              { icon: Clock, stat: "24+ hrs", label: "saved per questionnaire (SiftHub, 2026)" },
-              { icon: Zap, stat: "75–90%", label: "reduction in completion time (industry data)" },
-              { icon: Building2, stat: "$10K–$150K", label: "what incumbents charge per year" },
-              { icon: Users, stat: "1–50 seats", label: "no per-seat price traps" },
-            ].map((n, i) => (
-              <Card key={i} className="p-4">
-                <n.icon className="mb-2 h-4 w-4 text-muted-foreground" />
-                <div className="text-2xl font-semibold">{n.stat}</div>
-                <div className="text-xs text-muted-foreground">{n.label}</div>
-              </Card>
-            ))}
-          </div>
-        </div>
-      </section>
+      {/* HERO — animated, with before/after comparison */}
+      <Hero />
 
       {/* PROBLEM */}
       <section className="border-b bg-muted/30">
