@@ -38,7 +38,10 @@ export default function SignupPage() {
     setLoading(false);
     if (!res.ok) {
       const data = await res.json().catch(() => ({ error: "Sign up failed." }));
-      setError(data.error ?? "Sign up failed.");
+      // Show the API error + detail if available (helps debug DB/config issues)
+      const errMsg = data.error ?? "Sign up failed.";
+      const detail = data.detail ? ` (${data.detail})` : "";
+      setError(errMsg + detail);
       return;
     }
     setSuccess(true);

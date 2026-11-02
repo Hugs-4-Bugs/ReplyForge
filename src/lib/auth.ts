@@ -135,9 +135,8 @@ export const authOptions: NextAuthOptions = {
     },
   },
   secret: process.env.AUTH_SECRET || process.env.NEXTAUTH_SECRET,
-  // Auto-detect the deployment URL for callbacks. On Vercel, NEXTAUTH_URL must
-  // be set to the deployment URL (e.g. https://your-app.vercel.app).
-  ...(process.env.NEXTAUTH_URL ? { url: process.env.NEXTAUTH_URL } : {}),
+  // NOTE: Do NOT set `url` here — NextAuth v4 does not have a `url` option.
+  // The deployment URL is read from the NEXTAUTH_URL env var automatically.
 };
 
 // Helper: generate a random token for email verification / invites / api keys

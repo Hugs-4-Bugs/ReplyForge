@@ -30,7 +30,22 @@ export async function POST(req: NextRequest) {
   const { email, password, name, orgName } = parsed.data;
   const emailLower = email.toLowerCase().trim();
 
-  const existing = await db.user.findUnique({ where: { email: emailLower } });
+  // Wrap DB operations in try/catch so the user sees a helpful error instead
+  // of a generic "Sign up failed" when the DB is unreachable.
+  let existing;
+  try {
+    existing = await db.user.findUnique({ where: { email: emailLower } });
+  } catch (dbErr: any) {
+    console.error("[signup] DB error on findUnique:", dbErr);
+    return NextResponse.json(
+      {
+        error:
+          "Database connection error. Check that DATABASE_URL is set to a valid Postgres connection string in your Vercel env vars.",
+        detail: String(dbErr?.message ?? dbErr).slice(0, 200),
+      },
+      { status: 500 },
+    );
+  }
   if (existing) {
     // Don't leak existence - return generic message.
     return NextResponse.json(
@@ -51,36 +66,49 @@ export async function POST(req: NextRequest) {
   const verifyToken = randomToken(16);
   const verifyExpires = new Date(Date.now() + 24 * 60 * 60 * 1000);
 
-  const result = await db.$transaction(async (tx) => {
-    const user = await tx.user.create({
-      data: {
-        email: emailLower,
-        name,
-        passwordHash,
-        emailVerified: null, // verified on click
-      },
-    });
-    // Verification token is a standalone table (no FK to User) so we can
-    // issue tokens for emails that may not yet have a User row.
-    await tx.verificationToken.create({
-      data: { token: verifyToken, expires: verifyExpires, identifier: emailLower },
-    });
-    const org = await tx.organization.create({
-      data: {
-        name: orgName,
-        slug,
-        ownerId: user.id,
-        memberships: {
-          create: { userId: user.id, role: "owner" },
+  let result;
+  try {
+    result = await db.$transaction(async (tx) => {
+      const user = await tx.user.create({
+        data: {
+          email: emailLower,
+          name,
+          passwordHash,
+          emailVerified: null, // verified on click
         },
-        subscription: {
-          create: { plan: "free", status: "active" },
+      });
+      // Verification token is a standalone table (no FK to User) so we can
+      // issue tokens for emails that may not yet have a User row.
+      await tx.verificationToken.create({
+        data: { token: verifyToken, expires: verifyExpires, identifier: emailLower },
+      });
+      const org = await tx.organization.create({
+        data: {
+          name: orgName,
+          slug,
+          ownerId: user.id,
+          memberships: {
+            create: { userId: user.id, role: "owner" },
+          },
+          subscription: {
+            create: { plan: "free", status: "active" },
+          },
         },
-      },
-      include: { subscription: true },
+        include: { subscription: true },
+      });
+      return { user, org };
     });
-    return { user, org };
-  });
+  } catch (txErr: any) {
+    console.error("[signup] transaction error:", txErr);
+    return NextResponse.json(
+      {
+        error:
+          "Could not create your account. The database may not be connected. Check DATABASE_URL in your Vercel env vars (must be a Postgres connection string, not a SQLite file path).",
+        detail: String(txErr?.message ?? txErr).slice(0, 300),
+      },
+      { status: 500 },
+    );
+  }
 
   // Send verification email (or log it in dev mode)
   const verifyUrl = `${process.env.APP_URL ?? "http://localhost:3000"}/api/verify-email?token=${verifyToken}`;
